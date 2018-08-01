@@ -1,0 +1,4 @@
+{"buyStockMoney": "13.10", "buyNumStart": "0.00", "buyTime": "2018-07-2510:46:34", "stockNum": "603803", "nowStockMoney": "13.19", "buyNumEnd": "100.00"}
+{"buyStockMoney": "45.11", "buyNumStart": "0.00", "buyTime": "2018-07-3010:15:03", "stockNum": "300102", "nowStockMoney": "44.94", "buyNumEnd": "100.00"}
+{"buyStockMoney": "44.79", "buyNumStart": "100.00", "buyTime": "2018-07-3110:32:40", "stockNum": "300607", "nowStockMoney": "44.79", "buyNumEnd": "0.00"}
+{"buyStockMoney": "44.56", "buyNumStart": "0.00", "buyTime": "2018-07-3110:39:48", "stockNum": "300607", "nowStockMoney": "44.21", "buyNumEnd": "100.00", "holdNum": "4400", "nowMoney": "1042.35"}
