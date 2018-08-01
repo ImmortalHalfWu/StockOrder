@@ -10,8 +10,6 @@ import psutil
 import time
 import MyOrder as myOrder
 
-print('start.....')
-
 
 def find_idxSubHandle(pHandle, winClass, index=0):
     """
@@ -152,8 +150,21 @@ KEY_B = 66
 KEY_Y = 89
 KEY_S = 83
 # xiadanH = findProcessByName("xiadan.exe")
-mOrderUtill = myOrder.MyOrder()
-mOrderUtill.buy("300607","100")
+xiadan = win32gui.FindWindow(None, utf8toGbk("网上股票交易系统5.0"))
+# p_sub_handle(xiadan)
+editHandle = find_subHandle(xiadan, [("Static",0)])
+# editHandle = win32gui.FindWindowEx(xiadan, None, "Static", None)
+# title = utf8toGbk(win32gui.GetWindowText(xiadan))
+# clsname = win32gui.GetClassName(xiadan)
+print ("%x" % (editHandle))
+
+# 通过读取Static控件可以获得账户资金情况
+text = win32gui.GetWindowText(199814)
+print(gbk2utf8(text))
+
+
+# mOrderUtill = myOrder.MyOrder()
+# mOrderUtill.buy("300607","100")
 # 程序前置
 # win32gui.SetForegroundWindow(xiadanH)
 # sell("300607", "100")
