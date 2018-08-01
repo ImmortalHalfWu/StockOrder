@@ -9,7 +9,8 @@ import time
 class MyOrder:
 
     def __init__(self):
-        self.xiadanH = self.findProcessByName("xiadan.exe")
+        self.xiadanH = win32gui.FindWindow(None, self.utf8toGbk("网上股票交易系统5.0"))
+        # self.xiadanH = self.findProcessByName("xiadan.exe")
 
     def utf8toGbk(self,s):
         return s.decode('utf-8').encode('gbk')
