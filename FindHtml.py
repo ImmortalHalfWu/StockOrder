@@ -4,30 +4,28 @@ import urllib
 import urllib2
 import time
 
-from StockOrderApi import *
 import FileUtil
 from MyHTMLParser import MyHTMLParser
-import OrderUtil as mOrder
 import MyOrder as myOrder
 
 #################################################获取大神交易记录
 
-def printUserInfo():
-    # 获取当前持仓状态
-    arrAccountInfo = ["总资产", "可用资金", "持仓总市值", "总盈利金额", "持仓数量"];
-    for i in range(0, len(arrAccountInfo)):
-        value = GetAccountInfo(u"", i, 0)
-        print ("%s %f " % (arrAccountInfo[i], value))
-    print '--------------------------------------------------------'
-    # 取出所有的持仓股票代码,结果以 ','隔开的
-    allStockCode = GetAllPositionCode(0)
-    allStockCodeArray = allStockCode.split(',')
-    for i in range(0, len(allStockCodeArray)):
-        vol = GetPosInfo(allStockCodeArray[i], 0, 0)
-        changeP = GetPosInfo(allStockCodeArray[i], 4, 0)
-        print '持仓股票:'
-        print ("%s %d %.2f%%" % (allStockCodeArray[i], vol, changeP))
-    print '--------------------------------------------------------'
+# def printUserInfo():
+#     # 获取当前持仓状态
+#     arrAccountInfo = ["总资产", "可用资金", "持仓总市值", "总盈利金额", "持仓数量"];
+#     for i in range(0, len(arrAccountInfo)):
+#         value = GetAccountInfo(u"", i, 0)
+#         print ("%s %f " % (arrAccountInfo[i], value))
+#     print '--------------------------------------------------------'
+#     # 取出所有的持仓股票代码,结果以 ','隔开的
+#     allStockCode = GetAllPositionCode(0)
+#     allStockCodeArray = allStockCode.split(',')
+#     for i in range(0, len(allStockCodeArray)):
+#         vol = GetPosInfo(allStockCodeArray[i], 0, 0)
+#         changeP = GetPosInfo(allStockCodeArray[i], 4, 0)
+#         print '持仓股票:'
+#         print ("%s %d %.2f%%" % (allStockCodeArray[i], vol, changeP))
+#     print '--------------------------------------------------------'
 
 
 def printStockInfo(htmlParser):
@@ -44,7 +42,7 @@ print("当前时间：" + time.strftime('%H%M',time.localtime(time.time())))
 print "开始查询......"
 
 var = 0
-while var < 100:  # 该条件永远为true，循环将无限执行下去
+while var < 2:  # 该条件永远为true，循环将无限执行下去
     # try:
 
         data1 = {
@@ -133,7 +131,7 @@ while var < 100:  # 该条件永远为true，循环将无限执行下去
             print "网页数据为: %s" % (parserJson)
             print "本地数据为: %s" % (newStock)
             print("当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
-            printUserInfo()
+            # printUserInfo()
             # printStockInfo(htmlParser)
 
         time.sleep(1)
