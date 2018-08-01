@@ -162,6 +162,15 @@ print ("%x" % (editHandle))
 text = win32gui.GetWindowText(199814)
 print(gbk2utf8(text))
 
+# 复制粘贴
+time.sleep(5)
+win32api.keybd_event(win32con.VK_CONTROL, 0, 0, 0)
+win32api.keybd_event(67, 0, 0, 0)
+win32api.keybd_event(67, 0, win32con.KEYEVENTF_KEYUP, 0)
+time.sleep(3)
+win32api.keybd_event(86, 0, 0, 0)
+win32api.keybd_event(86, 0, win32con.KEYEVENTF_KEYUP, 0)
+win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 
 # mOrderUtill = myOrder.MyOrder()
 # mOrderUtill.buy("300607","100")

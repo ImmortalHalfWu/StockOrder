@@ -1,4 +1,5 @@
 # coding=utf-8
+import win32con
 
 __author__ = 'Administrator'
 
@@ -15,6 +16,8 @@ from pprint import pprint
 def gbk2utf8(s):
     return s.decode('gbk').encode('utf-8')
 
+def utf8toGbk(s):
+    return s.decode('utf-8').encode('gbk')
 
 def show_window_attr(hWnd):
     '''
@@ -24,20 +27,28 @@ def show_window_attr(hWnd):
     if not hWnd:
         return
 
-    # 中文系统默认title是gb2312的编码
-    title = win32gui.GetWindowText(hWnd)
-    title = gbk2utf8(title)
     clsname = win32gui.GetClassName(hWnd)
 
-    print '窗口句柄:%s ' % (hWnd)
+    len = win32gui.SendMessage(hWnd, win32con.WM_GETTEXTLENGTH)+1  # 获取edit控件文本长度
+    buffer = '0' * len
+    win32gui.SendMessage(hWnd, win32con.WM_GETTEXT, len, buffer)  # 读取文本
+    # 中文系统默认title是gb2312的编码
+    title = gbk2utf8(buffer)
+
+    print '窗口句柄:%s ' % (gbk2utf8(str(hWnd)))
     print '窗口标题:%s' % (title)
     print '窗口类名:%s' % (clsname)
     print ''
+    return title
 
 
 def show_windows(hWndList):
     for h in hWndList:
-        show_window_attr(h)
+        title = show_window_attr(h)
+        if str(title) == "资金余额":
+            index = hWndList.index(title) + 3
+            show_window_attr(index)
+            break
 
 
 def demo_top_windows():
@@ -65,16 +76,18 @@ def demo_child_windows(parent):
     show_windows(hWndChildList)
     return hWndChildList
 
+xiadan = win32gui.FindWindow(None, utf8toGbk("网上股票交易系统5.0"))
+demo_child_windows(xiadan)
 
-hWndList = demo_top_windows()
-assert len(hWndList)
-
-parent = hWndList[20]
-# 这里系统的窗口好像不能直接遍历，不知道是否是权限的问题
-hWndChildList = demo_child_windows(parent)
-
-print('-----top windows-----')
-pprint(hWndList)
-
-print('-----sub windows:from %s------' % (parent))
-pprint(hWndChildList)
+# hWndList = demo_top_windows()
+# assert len(hWndList)
+#
+# parent = hWndList[20]
+# # 这里系统的窗口好像不能直接遍历，不知道是否是权限的问题
+# hWndChildList = demo_child_windows(parent)
+#
+# print('-----top windows-----')
+# pprint(hWndList)
+#
+# print('-----sub windows:from %s------' % (parent))
+# pprint(hWndChildList)

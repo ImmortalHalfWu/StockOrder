@@ -101,6 +101,8 @@ class MyOrder:
     KEY_B = 66
     KEY_Y = 89
     KEY_S = 83
+    KEY_C = 67
+    KEY_V = 86
     # xiadanH = findProcessByName("xiadan.exe")
     # 程序前置
     # win32gui.SetForegroundWindow(xiadanH)
