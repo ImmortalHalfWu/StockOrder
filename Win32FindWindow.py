@@ -1,5 +1,9 @@
 # coding=utf-8
 import win32con
+from pandas import json
+
+import Util
+from UserInfo import SingleUserInfo
 
 __author__ = 'Administrator'
 
@@ -11,6 +15,7 @@ pythonwin中win32gui的用法
 
 import win32gui
 from pprint import pprint
+
 
 
 def gbk2utf8(s):
@@ -44,11 +49,36 @@ def show_window_attr(hWnd):
 
 def show_windows(hWndList):
     for h in hWndList:
-        title = show_window_attr(h)
-        if str(title) == "资金余额":
-            index = hWndList.index(title) + 3
-            show_window_attr(index)
-            break
+        # title = show_window_attr(h)
+        windowTitle = mUtil.getWindowText(h)
+        # print '窗口标题:%s' % (str(title))
+        if "资金余额" in str(windowTitle):
+            index = hWndList.index(h) + 3
+            findTitle = mUtil.getWindowText(hWndList[index])
+            SingleUserInfo.set_capital_balance(findTitle)
+        if "总资产" in str(windowTitle):
+            index = hWndList.index(h) + 3
+            findTitle = mUtil.getWindowText(hWndList[index])
+            SingleUserInfo.set_total_assets(findTitle)
+        if "股票市值" in str(windowTitle):
+            index = hWndList.index(h) + 3
+            findTitle = mUtil.getWindowText(hWndList[index])
+            SingleUserInfo.set_stock_market_value(findTitle)
+        if "可取资金" in str(windowTitle):
+            index = hWndList.index(h) + 3
+            findTitle = mUtil.getWindowText(hWndList[index])
+            SingleUserInfo.set_advisable_fundse(findTitle)
+        if "冻结资金" in str(windowTitle):
+            index = hWndList.index(h) + 3
+            findTitle = mUtil.getWindowText(hWndList[index])
+            SingleUserInfo.set_frozen_fundse(findTitle)
+        if "可用资金" in str(windowTitle):
+            index = hWndList.index(h) + 3
+            findTitle = mUtil.getWindowText(hWndList[index])
+            SingleUserInfo.set_available_funds(findTitle)
+
+    data = SingleUserInfo.__dict__
+    print(json.dumps(data))
 
 
 def demo_top_windows():
@@ -76,6 +106,7 @@ def demo_child_windows(parent):
     show_windows(hWndChildList)
     return hWndChildList
 
+mUtil = Util.Util()
 xiadan = win32gui.FindWindow(None, utf8toGbk("网上股票交易系统5.0"))
 demo_child_windows(xiadan)
 

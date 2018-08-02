@@ -58,7 +58,7 @@ class Util():
     '''
 
     def getWindowText(self, hWnd):
-        print("获取控件text：" + hWnd)
+        print("获取控件text：%s" %(hWnd))
         # 空返回
         if not hWnd:
             return ""
