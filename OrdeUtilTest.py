@@ -1,4 +1,5 @@
 import OrderUtil as mOrder
+import log
 
 saf = mOrder.OrderUtill()
 dd = """
@@ -13,5 +14,5 @@ dd = """
         1，根据编号， 取出当前持有股数
         2，如果股数>0，调用API下单
 """
-print(saf.getUseableMoney())
-print(saf.findStockVol('002232'))
+log.log(saf.getUseableMoney())
+log.log(saf.findStockVol('002232'))

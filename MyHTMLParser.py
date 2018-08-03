@@ -3,6 +3,9 @@ from HTMLParser import HTMLParser
 
 
 import sys
+
+import log
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -25,7 +28,7 @@ class MyHTMLParser(HTMLParser):
         :param attrs:
         :return:
         """
-        # print("Encountered a start tag:", tag)
+        # log.log("Encountered a start tag:", tag)
 
     def handle_endtag(self, tag):
         """
@@ -34,7 +37,7 @@ class MyHTMLParser(HTMLParser):
                 :param attrs:
                 :return:
                 """
-        # print("Encountered a start tag:", tag)
+        # log.log("Encountered a start tag:", tag)
 
     def handle_data(self, data):
         self.index = self.index + 1
@@ -61,7 +64,7 @@ class MyHTMLParser(HTMLParser):
         :param attrs:
         :return:
         """
-        print("Encountered startendtag :", tag)
+        log.log("Encountered startendtag :", tag)
 
     def handle_comment(self, data):
         """
@@ -69,5 +72,5 @@ class MyHTMLParser(HTMLParser):
         :param data:
         :return:
         """
-        print("Encountered comment :", data)
+        log.log("Encountered comment :", data)
 

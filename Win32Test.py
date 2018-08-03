@@ -9,6 +9,7 @@ import win32gui
 import psutil
 import time
 import MyOrder as myOrder
+import log
 
 
 def find_idxSubHandle(pHandle, winClass, index=0):
@@ -49,7 +50,7 @@ def p_sub_handle(phandle):
         handle = win32gui.FindWindowEx(phandle, handle, None, None)
         if handle != 0:
             className = win32gui.GetClassName(handle)
-            print(className)
+            log.log(className)
 
 
 def gbk2utf8(s):
@@ -156,11 +157,11 @@ editHandle = find_subHandle(xiadan, [("Static",0)])
 # editHandle = win32gui.FindWindowEx(xiadan, None, "Static", None)
 # title = utf8toGbk(win32gui.GetWindowText(xiadan))
 # clsname = win32gui.GetClassName(xiadan)
-print ("%x" % (editHandle))
+log.log ("%x" % (editHandle))
 
 # 通过读取Static控件可以获得账户资金情况
 text = win32gui.GetWindowText(199814)
-print(gbk2utf8(text))
+log.log(gbk2utf8(text))
 
 # 复制粘贴
 time.sleep(5)
@@ -207,11 +208,11 @@ win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 # win32api.keybd_event(112, 0, win32con.KEYEVENTF_KEYUP, 0)
 
 # notepadH = win32gui.FindWindow(None, utf8toGbk("网上股票交易系统5.0"))
-# print(notepadH)
+# log.log(notepadH)
 
 # p_sub_handle(notepadH)
 # editH = find_subHandle(notepadH, [("Edit",0)])
-# print(editH)
+# log.log(editH)
 
 # 获取所有子控件句柄
 # hWndChildList = []
@@ -220,7 +221,7 @@ win32api.keybd_event(win32con.VK_CONTROL, 0, win32con.KEYEVENTF_KEYUP, 0)
 #     title = win32gui.GetWindowText(h)
 #     title = gbk2utf8(title)
 #     clsname = win32gui.GetClassName(h)
-#     print '窗口句柄:%s ' % (h)
-#     print '窗口标题:%s' % (title)
-#     print '窗口类名:%s' % (clsname)
-#     print ''
+#     log.log '窗口句柄:%s ' % (h)
+#     log.log '窗口标题:%s' % (title)
+#     log.log '窗口类名:%s' % (clsname)
+#     log.log ''

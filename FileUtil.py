@@ -13,7 +13,7 @@ class FileUtil:
         # self.mFile.write('\n'+self.lineBetween+')
         self.mFile.write('\n' + jsonString)
         # timer = self.mFile.readline()
-        # print(timer)
+        # log.log(timer)
         self.mFile.close()
 
     def readNewStock(self):
@@ -21,7 +21,7 @@ class FileUtil:
         lastJson = ''
         for lastJson in self.mFile.readlines():  # 依次读取每行
             lastJson = lastJson.strip()  # 去掉每行头尾空白
-            # print "读取的数据为: %s" % (line)
+            # log.log "读取的数据为: %s" % (line)
         self.mFile.close()
         return lastJson
 

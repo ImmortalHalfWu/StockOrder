@@ -3,17 +3,26 @@ import win32gui
 import time
 
 import win32con
+from pandas import json
 
 import KeyBroadUtil
-import Util
+import log
+from Util import SingleUtil
+from UserInfoBean import SingleUserInfo
 
 
 class MyOrder:
 
     def __init__(self):
-        self.util = Util.Util()
         self.keyBroadUtil = KeyBroadUtil.KeyBrodaUtil()
-        self.xiadanH = self.util.findMainHwnd()
+        self.xiadanH = SingleUtil.findMainHwnd()
+        if self.xiadanH == 0:
+            time.sleep(3000)
+            log.log("3s后重新尝试")
+            self.xiadanH = SingleUtil.findMainHwnd()
+        if self.xiadanH != 0:
+            # todo 初始化用户数据
+            self.initUserInfo()
 
     def clickBroad(self, VK):
         self.keyBroadUtil.clickBroad(VK)
@@ -78,3 +87,42 @@ class MyOrder:
     # win32gui.SetForegroundWindow(xiadanH)
     # sell("300607", "100")
     # win32gui.SetBkMode(xiadanH, win32con.TRANSPARENT)
+
+    def initUserInfo(self):
+        log.log("===================================================")
+        log.log("开始填充用户数据.......")
+        log.log("===================================================")
+        childWindows = SingleUtil.findChildWindows(self.xiadanH)
+        for childHw in childWindows:
+            # title = show_window_attr(h)
+            windowTitle = SingleUtil.getWindowText(childHw)
+            # log.log '窗口标题:%s' % (str(title))
+            if "资金余额" in str(windowTitle):
+                findTitle = self.find_text_for_index(childWindows, childHw)
+                SingleUserInfo.set_capital_balance(findTitle)
+            if "总 资 产" in str(windowTitle):
+                findTitle = self.find_text_for_index(childWindows, childHw)
+                SingleUserInfo.set_total_assets(findTitle)
+            if "股票市值" in str(windowTitle):
+                findTitle = self.find_text_for_index(childWindows, childHw)
+                SingleUserInfo.set_stock_market_value(findTitle)
+            if "可取金额" in str(windowTitle):
+                findTitle = self.find_text_for_index(childWindows, childHw)
+                SingleUserInfo.set_advisable_fundse(findTitle)
+            if "冻结金额" in str(windowTitle):
+                findTitle = self.find_text_for_index(childWindows, childHw)
+                SingleUserInfo.set_frozen_fundse(findTitle)
+            if "可用金额" in str(windowTitle):
+                findTitle = self.find_text_for_index(childWindows, childHw)
+                SingleUserInfo.set_available_funds(findTitle)
+
+        SingleUserInfo.__dict__ = json.loads(json.dumps(SingleUserInfo.__dict__).replace("\u0000", ""))
+        log.log("===================================================")
+        log.log("用户信息资金信息：")
+        log.log(json.dumps(SingleUserInfo.__dict__))
+        log.log("===================================================")
+
+    def find_text_for_index(self, hWndList, h):
+        index = hWndList.index(h) + 3
+        findTitle = SingleUtil.getWindowText(hWndList[index])
+        return findTitle

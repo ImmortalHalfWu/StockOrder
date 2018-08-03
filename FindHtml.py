@@ -5,6 +5,7 @@ import urllib2
 import time
 
 import FileUtil
+import log
 from MyHTMLParser import MyHTMLParser
 import MyOrder as myOrder
 
@@ -29,17 +30,17 @@ import MyOrder as myOrder
 
 
 def printStockInfo(htmlParser):
-    print("股票代码" + htmlParser.stockNum)
-    print("成交价" + htmlParser.buyStockMoney)
-    print("持仓比例" + htmlParser.buyNumStart + "-->" + htmlParser.buyNumEnd)
-    print("此股票当前价" + htmlParser.nowStockMoney)
-    print("此次购买时间为" + htmlParser.buyTime)
+    log.log("股票代码" + htmlParser.stockNum)
+    log.log("成交价" + htmlParser.buyStockMoney)
+    log.log("持仓比例" + htmlParser.buyNumStart + "-->" + htmlParser.buyNumEnd)
+    log.log("此股票当前价" + htmlParser.nowStockMoney)
+    log.log("此次购买时间为" + htmlParser.buyTime)
 
 while int(time.strftime('%H%M',time.localtime(time.time()))) < 928 :
     time.sleep(30)
 
-print("当前时间：" + time.strftime('%H%M',time.localtime(time.time())))
-print "开始查询......"
+log.log("当前时间：" + time.strftime('%H%M',time.localtime(time.time())))
+log.log("开始查询......")
 
 var = 0
 while var < 2:  # 该条件永远为true，循环将无限执行下去
@@ -80,7 +81,7 @@ while var < 2:  # 该条件永远为true，循环将无限执行下去
             # parserDict['buyNumStart'] = "100.00"
             # parserDict['buyNumEnd'] = "0.00"
         except Exception, e:
-            print e.message
+            log.log(e.message)
 
         # 当前最新数据
         parserJson = json.dumps(parserDict)
@@ -94,7 +95,7 @@ while var < 2:  # 该条件永远为true，循环将无限执行下去
 
         # 两次时间比较,如果不相同，则下单
         if myNewParser.buyTime != htmlParser.buyTime:
-            print(
+            log.log(
                 '================================================================================================================')
             mOrderUtill = myOrder.MyOrder()
             var = var + 1
@@ -104,7 +105,7 @@ while var < 2:  # 该条件永远为true，循环将无限执行下去
                 stockVol = myNewParser.holdNum
                 # mOrderUtill.sell(htmlParser.stockNum, int(stockVol), float(htmlParser.nowStockMoney))
                 mOrderUtill.sell(htmlParser.stockNum, stockVol)
-                print "卖出: %s，当前持有数量：%s,卖出价格：%s" % (htmlParser.stockNum, stockVol, htmlParser.nowStockMoney)
+                log.log("卖出: %s，当前持有数量：%s,卖出价格：%s" % (htmlParser.stockNum, stockVol, htmlParser.nowStockMoney))
                 parserDict['holdNum'] = "0"
                 parserDict['nowMoney'] = str(float(htmlParser.nowStockMoney) * int(stockVol) + float(myNewParser.nowMoney))
             else:  # 买入
@@ -118,19 +119,19 @@ while var < 2:  # 该条件永远为true，循环将无限执行下去
                     parserDict['holdNum'] = str(buyNum)
                     parserDict['nowMoney'] = useableMoney - buyNum * float(htmlParser.nowStockMoney)
                 else:
-                    print("取消此次交易")
-                    print "买入: %s，余额：%s,买入价格：%s,买入份额：%s" % (
-                        htmlParser.stockNum, useableMoney, htmlParser.nowStockMoney, buyNum)
+                    log.log("取消此次交易")
+                    log.log ("买入: %s，余额：%s,买入价格：%s,买入份额：%s" % (
+                        htmlParser.stockNum, useableMoney, htmlParser.nowStockMoney, buyNum))
                     break
 
-                print "买入: %s，余额：%s,买入价格：%s,买入份额：%s" % (
-                htmlParser.stockNum, useableMoney, htmlParser.nowStockMoney, buyNum)
+                log.log ("买入: %s，余额：%s,买入价格：%s,买入份额：%s" % (
+                htmlParser.stockNum, useableMoney, htmlParser.nowStockMoney, buyNum))
 
             parserJson = json.dumps(parserDict)
             fileUtil.writeStock(parserJson)  # 写入最近一次交易
-            print "网页数据为: %s" % (parserJson)
-            print "本地数据为: %s" % (newStock)
-            print("当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
+            log.log ("网页数据为: %s" % (parserJson))
+            log.log ("本地数据为: %s" % (newStock))
+            log.log("当前时间：" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time())))
             # printUserInfo()
             # printStockInfo(htmlParser)
 

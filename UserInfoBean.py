@@ -1,5 +1,5 @@
 # coding=utf-8
-class UserInfo(object):
+class UserInfoBean(object):
 
     # 资金余额
     capital_balance = "1"
@@ -55,4 +55,4 @@ class UserInfo(object):
     def foo(self):
         pass
 
-SingleUserInfo = UserInfo()
+SingleUserInfo = UserInfoBean()

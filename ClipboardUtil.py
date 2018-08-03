@@ -1,6 +1,9 @@
 import win32clipboard as w
 import win32con
 
+import log
+
+
 def getText():
     w.OpenClipboard()
     d = w.GetClipboardData(win32con.CF_TEXT)
@@ -14,4 +17,4 @@ def setText(aString):
     w.CloseClipboard()
 
 
-print(getText())
+log.log(getText())
