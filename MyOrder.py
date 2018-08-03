@@ -17,8 +17,8 @@ class MyOrder:
         self.keyBroadUtil = KeyBroadUtil.KeyBrodaUtil()
         self.xiadanH = SingleUtil.findMainHwnd()
         if self.xiadanH == 0:
-            time.sleep(3000)
             log.log("3s后重新尝试")
+            time.sleep(3000)
             self.xiadanH = SingleUtil.findMainHwnd()
         if self.xiadanH != 0:
             # todo 初始化用户数据
@@ -26,6 +26,15 @@ class MyOrder:
 
     def clickBroad(self, VK):
         self.keyBroadUtil.clickBroad(VK)
+
+    def clickBroadF2(self):
+        self.clickBroad(win32con.VK_F2)
+
+    def clickBroadF1(self):
+        self.clickBroad(win32con.VK_F1)
+
+    def clickBroadF4(self):
+        self.clickBroad(win32con.VK_F4)
 
     def clickTab(self, clickNum):
         self.keyBroadUtil.clickTab(clickNum)
@@ -35,8 +44,8 @@ class MyOrder:
 
     def sell(self, stockNum, sellNum):
         win32gui.SetForegroundWindow(self.xiadanH)
-        self.clickBroad(win32con.VK_F1)
-        self.clickBroad(win32con.VK_F2)
+        self.clickBroadF1()
+        self.clickBroadF2()
         # 4下tab
         self.clickTab(4)
 
@@ -61,8 +70,8 @@ class MyOrder:
     def buy(self, stockNum, buyNum):
         # 程序前置
         win32gui.SetForegroundWindow(self.xiadanH)
-        self.clickBroad(win32con.VK_F2)
-        self.clickBroad(win32con.VK_F1)
+        self.clickBroadF2()
+        self.clickBroadF1()
         # 4下tab
         self.clickTab(4)
 
@@ -82,16 +91,14 @@ class MyOrder:
         self.clickBroad(self.keyBroadUtil.KEY_B)
         self.clickBroad(self.keyBroadUtil.KEY_Y)
 
-    # xiadanH = findProcessByName("xiadan.exe")
-    # 程序前置
-    # win32gui.SetForegroundWindow(xiadanH)
-    # sell("300607", "100")
-    # win32gui.SetBkMode(xiadanH, win32con.TRANSPARENT)
-
     def initUserInfo(self):
         log.log("===================================================")
         log.log("开始填充用户数据.......")
         log.log("===================================================")
+        # 程序前置
+        win32gui.SetForegroundWindow(self.xiadanH)
+        self.clickBroadF2()
+        self.clickBroadF4()
         childWindows = SingleUtil.findChildWindows(self.xiadanH)
         for childHw in childWindows:
             # title = show_window_attr(h)
