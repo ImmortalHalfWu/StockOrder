@@ -4,6 +4,7 @@ from pandas import json
 
 import Util
 from UserInfo import SingleUserInfo
+import test
 
 __author__ = 'Administrator'
 
@@ -53,33 +54,31 @@ def show_windows(hWndList):
         windowTitle = mUtil.getWindowText(h)
         # print '窗口标题:%s' % (str(title))
         if "资金余额" in str(windowTitle):
-            index = hWndList.index(h) + 3
-            findTitle = mUtil.getWindowText(hWndList[index])
+            findTitle = find_text_for_index(hWndList,h)
             SingleUserInfo.set_capital_balance(findTitle)
-        if "总资产" in str(windowTitle):
-            index = hWndList.index(h) + 3
-            findTitle = mUtil.getWindowText(hWndList[index])
+        if "总 资 产" in str(windowTitle):
+            findTitle = find_text_for_index(hWndList, h)
             SingleUserInfo.set_total_assets(findTitle)
         if "股票市值" in str(windowTitle):
-            index = hWndList.index(h) + 3
-            findTitle = mUtil.getWindowText(hWndList[index])
+            findTitle = find_text_for_index(hWndList, h)
             SingleUserInfo.set_stock_market_value(findTitle)
-        if "可取资金" in str(windowTitle):
-            index = hWndList.index(h) + 3
-            findTitle = mUtil.getWindowText(hWndList[index])
+        if "可取金额" in str(windowTitle):
+            findTitle = find_text_for_index(hWndList, h)
             SingleUserInfo.set_advisable_fundse(findTitle)
-        if "冻结资金" in str(windowTitle):
-            index = hWndList.index(h) + 3
-            findTitle = mUtil.getWindowText(hWndList[index])
+        if "冻结金额" in str(windowTitle):
+            findTitle = find_text_for_index(hWndList, h)
             SingleUserInfo.set_frozen_fundse(findTitle)
-        if "可用资金" in str(windowTitle):
-            index = hWndList.index(h) + 3
-            findTitle = mUtil.getWindowText(hWndList[index])
+        if "可用金额" in str(windowTitle):
+            findTitle = find_text_for_index(hWndList, h)
             SingleUserInfo.set_available_funds(findTitle)
 
-    data = SingleUserInfo.__dict__
-    print(json.dumps(data))
+    SingleUserInfo.__dict__ = json.loads(json.dumps(SingleUserInfo.__dict__).replace("\u0000", ""))
+    print(json.dumps(SingleUserInfo.__dict__))
 
+def find_text_for_index(hWndList,h):
+    index = hWndList.index(h) + 3
+    findTitle = mUtil.getWindowText(hWndList[index])
+    return findTitle
 
 def demo_top_windows():
     '''

@@ -2,21 +2,29 @@
 class UserInfo(object):
 
     # 资金余额
-    capital_balance = ""
+    capital_balance = "1"
     # 总资产
-    total_assets = ""
+    total_assets = "2"
     # 股票市值
-    stock_market_value = ""
+    stock_market_value = "3"
     # 可取资金
-    advisable_fundse = ""
+    advisable_fundse = "4"
     # 冻结资金
-    frozen_fundse = ""
+    frozen_fundse = "5"
     # 可用资金
-    available_funds = ""
+    available_funds = "6"
     # 股票持仓
     Stock_holdings = []
     # 可撤销股票
     Stock_revoke = []
+
+    def __init__(self):
+        self.capital_balance = "1"
+        self.total_assets = "2"
+        self.stock_market_value = "3"
+        self.advisable_fundse = "4"
+        self.frozen_fundse = "5"
+        self.available_funds = "6"
 
     def set_capital_balance(self, s):
         self.capital_balance = s
